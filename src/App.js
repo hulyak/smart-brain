@@ -43,7 +43,9 @@ class App extends Component {
     // https://www.clarifai.com/models/face-detection-image-recognition-model-a403429f2ddf4b49b307e318f00e528b-detection
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((response) => this.calculateFaceLocation(response))
+      .then((response) =>
+        this.displayFaceBox(this.calculateFaceLocation(response))
+      )
       .catch((err) => console.log(err));
   };
 
@@ -63,6 +65,12 @@ class App extends Component {
     };
   };
 
+  //create the box
+  displayFaceBox = (box) => {
+    console.log(box);
+    this.setState({ box: box });
+  };
+
   render() {
     return (
       <div className="App">
@@ -74,7 +82,7 @@ class App extends Component {
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit}
         />
-        <FaceRecognition imageUrl={this.state.imageUrl} />
+        <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box} />
       </div>
     );
   }
