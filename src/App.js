@@ -74,15 +74,15 @@ class App extends Component {
   };
 
   //route to home page
-  onRouteChange = () => {
-    this.setState({ route: 'home' });
+  onRouteChange = (route) => {
+    this.setState({ route: route });
   };
 
   render() {
     return (
       <div className="App">
         <Particles className="particles" params={particlesOptions} />
-        <Navigation />
+        <Navigation onRouteChange={this.onRouteChange} />
 
         {/* show sign in page */}
         {this.state.route === 'signin' ? (
