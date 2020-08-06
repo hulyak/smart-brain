@@ -38,6 +38,13 @@ class App extends Component {
     isSignedIn: false,
   };
 
+  //fetch server
+  // componentDidMount() {
+  //   fetch('http://localhost:3030')
+  //     .then((response) => response.json())
+  //     .then((data) => console.log(data));
+  // }
+
   onInputChange = (event) => {
     this.setState({ input: event.target.value });
   };
@@ -94,7 +101,7 @@ class App extends Component {
           isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
         />
-        {/* show sign in page */}
+        {/* show home page */}
         {route === 'home' ? (
           <div>
             <Logo />

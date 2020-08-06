@@ -2,6 +2,7 @@ import React from 'react';
 
 const Navigation = ({ onRouteChange, isSignedIn }) => {
   if (isSignedIn) {
+    //if it is signed in , show sign out
     return (
       <nav style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <p
@@ -22,7 +23,7 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
         <p
           onClick={() => onRouteChange('register')}
           className="f3 link dim black underline pa3 pointer">
-          register!
+          Register!
         </p>
       </nav>
     );
