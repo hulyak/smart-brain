@@ -14,12 +14,13 @@ class Signin extends React.Component {
     this.setState({signInPassword : event.target.value})
    }
   
-  onSubmitSignin = () => {
+  onSubmitSignin = (e) => {
+    e.preventDefault();
     // console.log(this.state); fetch by default makes GET request turn into POST
     fetch('http://localhost:3030/signin', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      body: JSON.stringify({                  //send to backend
         email: this.state.signInEmail,
         password : this.state.signInPassword
       })
@@ -70,7 +71,7 @@ class Signin extends React.Component {
               //change route to home page after sign in, call immediately when clicked
               onClick={this.onSubmitSignin}
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-              type="submit"
+              type="button"
               value="Sign in"
             />
           </div>

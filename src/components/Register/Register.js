@@ -1,7 +1,48 @@
 import React from 'react';
 
-const Register = ({ onRouteChange }) => {
-  return (
+class Register extends React.Component {
+    state = {
+        email : '',
+        password: '',
+        name: ''
+      }
+
+  onNameChange = (event) => {
+    this.setState({name : event.target.value})
+  }
+
+   onEmailChange = (event) => {
+    this.setState({email : event.target.value})
+   }
+  
+  onPasswordChange = (event) => {
+    this.setState({password : event.target.value})
+  }
+  
+  onSubmitSignin = (e) => {
+    e.preventDefault();
+    // console.log(this.state); fetch by default makes GET request turn into POST
+    fetch('http://localhost:3030/register', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({                  //send to backend
+        email: this.state.email,
+        password: this.state.password,
+        name : this.state.name
+      })
+    })
+      .then(response => response.json())
+      .then(user => {        //for register route, return the last user
+        if (user) {
+          this.props.loadUser(user);
+          this.props.onRouteChange('home')
+      }
+    })
+  }
+
+  render() {
+    const { onRouteChange } = this.props;
+     return (
     <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw5 shadow center">
       <main className="pa4 black-80">
         <form className="measure">
@@ -16,6 +57,7 @@ const Register = ({ onRouteChange }) => {
                 type="text"
                 name="name"
                 id="name"
+                onChange = {this.onNameChange}
               />
             </div>
             <div className="mt3">
@@ -26,7 +68,8 @@ const Register = ({ onRouteChange }) => {
                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="text"
                 name="email"
-                id="email"
+                   id="email"
+                   onChange = {this.onEmailChange}
               />
             </div>
             <div className="mv3">
@@ -38,13 +81,14 @@ const Register = ({ onRouteChange }) => {
                 type="password"
                 name="password"
                 id="password"
+                onChange={this.onPasswordChange}
               />
             </div>
           </fieldset>
           <div>
             <input
               //change route to home page after sign in, call immediately when clicked
-              onClick={() => onRouteChange('home')}
+              onClick={this.onSubmitSignin}
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Register"
@@ -54,6 +98,8 @@ const Register = ({ onRouteChange }) => {
       </main>
     </article>
   );
+  }
+ 
 };
 
 export default Register;
