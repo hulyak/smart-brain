@@ -42,10 +42,9 @@ class App extends Component {
       name: '',
       email: '',
       entries: 0,
-      joined: ''
-    }
+      joined: '',
+    },
   };
-
 
   //fetch server
   // componentDidMount() {
@@ -53,17 +52,19 @@ class App extends Component {
   //     .then((response) => response.json())
   //     .then((data) => console.log(data));
   // }
+
+  //load new user to database when registered
   loadUser = (data) => {
     this.setState({
       user: {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      entries: data.entries,
-      joined: data.joined
-    }
-  })
-  }
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined,
+      },
+    });
+  };
 
   onInputChange = (event) => {
     this.setState({ input: event.target.value });
@@ -125,7 +126,10 @@ class App extends Component {
         {route === 'home' ? (
           <div>
             <Logo />
-            <Rank />
+            <Rank
+              name={this.state.user.name}
+              entries={this.state.user.entries}
+            />
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
@@ -133,10 +137,12 @@ class App extends Component {
             <FaceRecognition imageUrl={imageUrl} box={box} />
           </div>
         ) : route === 'signin' ? ( //another condition
-          <Signin onRouteChange={this.onRouteChange} />
+          <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
         ) : (
-          <Register onRouteChange={this.onRouteChange}
-                loadUser={this.loadUser} />
+          <Register
+            onRouteChange={this.onRouteChange}
+            loadUser={this.loadUser}
+          />
         )};
       </div>
     );
