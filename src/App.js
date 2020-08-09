@@ -75,7 +75,7 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input }); //update image url with the given input
     // https://www.clarifai.com/models/face-detection-image-recognition-model-a403429f2ddf4b49b307e318f00e528b-detection
     //make clarifai call from the backend
-    fetch('http://localhost:3030/imageUrl', {
+    fetch('https://nameless-sierra-30868.herokuapp.com/imageUrl', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ class App extends Component {
       .then((response) => {
         //update the user entries when they submit images
         if (response) {
-          fetch('http://localhost:3030/image', {
+          fetch('https://nameless-sierra-30868.herokuapp.com:3030/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

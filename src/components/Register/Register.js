@@ -22,7 +22,7 @@ class Register extends React.Component {
   onSubmitSignin = (e) => {
     e.preventDefault();
     // console.log(this.state); fetch by default makes GET request turn into POST
-    fetch('http://localhost:3030/register', {
+    fetch('https://nameless-sierra-30868.herokuapp.com/register', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
