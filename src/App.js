@@ -88,7 +88,7 @@ class App extends Component {
       .then((response) => {
         //update the user entries when they submit images
         if (response) {
-          fetch('https://nameless-sierra-30868.herokuapp.com:3030/image', {
+          fetch('https://nameless-sierra-30868.herokuapp.com/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
