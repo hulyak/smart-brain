@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
+
 import './App.css';
 
 //Components
@@ -11,10 +11,6 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
-
-const app = new Clarifai.App({
-  apiKey: 'c5799ad4c8dd4d7ca5099a331b35f299',
-});
 
 //particles js
 const particlesOptions = {
@@ -78,8 +74,17 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input }); //update image url with the given input
     // https://www.clarifai.com/models/face-detection-image-recognition-model-a403429f2ddf4b49b307e318f00e528b-detection
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    //make clarifai call from the backend
+    fetch('http://localhost:3030/imageUrl', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        input: this.state.input,
+      }),
+    })
+      .then((response) => response.json())
       .then((response) => {
         //update the user entries when they submit images
         if (response) {
@@ -120,7 +125,7 @@ class App extends Component {
 
   //create the box
   displayFaceBox = (box) => {
-    console.log(box);
+    // console.log(box);
     this.setState({ box: box });
   };
 

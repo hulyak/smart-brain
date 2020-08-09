@@ -94,3 +94,8 @@ export default Signin;
 
 // https://tachyons.io/components/forms/sign-in/index.html
 // https://tachyons.io/components/cards/product-card/index.html
+
+//Security problems:
+//no validation for email, name and password
+//user can register without any info
+//onSubmit button should check inputs
