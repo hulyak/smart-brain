@@ -29,22 +29,27 @@ const particlesOptions = {
   },
 };
 
+const initialState = {
+  input: '',
+  imageUrl: '',
+  box: {},
+  route: 'signin',
+  isSignedIn: false,
+  // new user when registered
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: '',
+  },
+};
+
 class App extends Component {
-  state = {
-    input: '',
-    imageUrl: '',
-    box: {},
-    route: 'signin',
-    isSignedIn: false,
-    // new user when registered
-    user: {
-      id: '',
-      name: '',
-      email: '',
-      entries: 0,
-      joined: '',
-    },
-  };
+  constructor() {
+    super();
+    this.state = initialState;
+  }
 
   //fetch server
   // componentDidMount() {
@@ -87,8 +92,10 @@ class App extends Component {
           })
             .then((response) => response.json())
             .then((count) => {
+              // only update the entries in user object
               this.setState(Object.assign(this.state.user, { entries: count }));
-            });
+            })
+            .catch(console.log);
         }
         this.displayFaceBox(this.calculateFaceLocation(response));
       })
@@ -120,7 +127,7 @@ class App extends Component {
   //route to home page
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState({ isSignedIn: false });
+      this.setState(initialState); //remove user info and reset the state
     } else if (route === 'home') {
       this.setState({ isSignedIn: true });
     }
